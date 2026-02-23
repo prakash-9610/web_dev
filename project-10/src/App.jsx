@@ -1,4 +1,4 @@
-import { useState, useCallback , useEffect , useRef} from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 
 import './App.css'
 
@@ -7,8 +7,9 @@ function App() {
   const [numberAllow, setNumberAllow] = useState(false);
   const [charAllowd, setCharAllowed] = useState(false);
   const [Password, setPassword] = useState("");
+  //useRef is basically use to copy and select the text 
   const passwordRef = useRef(null);
-  
+
   const passwordGenerator = useCallback(() => {
     let pass = "";
     let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -17,27 +18,25 @@ function App() {
 
     for (let i = 1; i <= length; i++) {
       let char = Math.floor(Math.random() * str.length + 1);
+      // in this math.random() will generate a decimal value, after that we have  to make the value >=1, to do this we multiply the value with str.length(), to avoid 0 we added +1
       pass += str.charAt(char);
     }
 
     setPassword(pass);
-    
-    
-  
-  
-  
+
+
+
+
+
   }, [length, numberAllow, charAllowd, setPassword]);
 
   const copytoclipBoard = useCallback(() => {
     passwordRef.current?.select();
-    passwordRef.current?.setSelectionRange(0, 9);
+    passwordRef.current?.setSelectionRange(0, 15);
     window.navigator.clipboard.writeText(Password);
-  }, [Password ])
+  }, [Password])
 
-  useEffect(() =>{passwordGenerator()}, [length, numberAllow, charAllowd, passwordGenerator])
-
-  
-  
+  useEffect(() => { passwordGenerator() }, [length, numberAllow, charAllowd, passwordGenerator])
 
   return (
     <>
@@ -49,7 +48,7 @@ function App() {
         </div>
         <div className='flex text-sm gap-x-2'>
           <div className='flex items-center gap-x-1'>
-            <input type="range" min={8} max={100} value={length} className='cursor-pointer' onChange={(e) =>{setLength(e.target.value)}}/>
+            <input type="range" min={8} max={100} value={length} className='cursor-pointer' onChange={(e) => { setLength(e.target.value) }} />
             <label>Length:{length}</label>
           </div>
           <div className='flex items-center gap-x-1'>
@@ -61,8 +60,8 @@ function App() {
             <label>charAllow</label>
           </div>
         </div>
-    </div>
-    
+      </div>
+
     </>
   )
 }
